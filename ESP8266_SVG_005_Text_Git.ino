@@ -26,7 +26,7 @@ void setup ( void ) {
   Serial.println ( WiFi.localIP() );
 
   if ( mdns.begin ( "esp8266", WiFi.localIP() ) ) {    Serial.println ( "MDNS responder started" );  }
-  server.on ( "/", handleRoot );  server.on ( "/test.svg", Polygon );  server.on ( "/inline", []() {server.send ( 200, "text/plain", "this works as well" );} );
+  server.on ( "/", handleRoot );  server.on ( "/test.svg", Text );  server.on ( "/inline", []() {server.send ( 200, "text/plain", "this works as well" );} );
   server.onNotFound ( handleNotFound );
   server.begin();
   Serial.println ( "HTTP server started" );
@@ -36,7 +36,7 @@ void loop ( void ) {
   mdns.update();
   server.handleClient();
 }
-void Polygon() {                   // This routine set up the Circle SVG string for parsing to w3.org
+void Text() {                   // This routine set up the Text SVG string for parsing to w3.org
   String out = "";
   char temp[500];
   out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1000\" height=\"800\">\n";
@@ -50,7 +50,7 @@ void Polygon() {                   // This routine set up the Circle SVG string 
   // <tspan  /tspan>                makes a container for multiple line of text
   // </text>                        Be sure to end the text with </text>  to close the text wrapper part
   sprintf(temp, "<text x=\"0\" y=\"100\" font-size=\"80\" fill=\"black\">ESP8266 SVG Text<tspan font-size=\"50\" fill=\"blue\" x=\"0\" y=\"200\">SVG Text size 50</tspan></text>\n"); out +=temp;
- //Serial.println(out);
+ // Debug Serial.println(out);
   out += "</g>\n</svg>\n";                   // close the SVG wrapper
   server.send ( 200, "image/svg+xml", out);  // and send it to http://www.w3.org/2000/svg\
   
