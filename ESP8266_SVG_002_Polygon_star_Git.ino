@@ -36,12 +36,12 @@ void loop ( void ) {
   mdns.update();
   server.handleClient();
 }
-void Polyline() {                   // This routine set up the Circle SVG string for parsing to w3.org
+void Polyline() {                   // This routine set up the Polygon SVG string for parsing to w3.org
   String out = "";
   char temp[300];
   out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1000\" height=\"800\">\n";
   out += "<g >\n";               // Start our data string          
- // As we are including some variables into the Polygon code we need to lay it into a temporary buffer ( temp ), be sure that you make it big enough.
+  // As we are including some variables into the Polygon code we need to lay it into a temporary buffer ( temp ), be sure that you make it big enough.
   // polygon =                      the command for polygons (this is different to line plotting)
   // points=\"200,20,80,396         Plot points x,y to x1,y1 etcetcetc
   // stroke=\"black\"               Draw outline of Polygon in black
@@ -49,7 +49,7 @@ void Polyline() {                   // This routine set up the Circle SVG string
   // fill=\"Aqua\"                  Fill the inside with Aqua --- if you omit this the its filled with black by default!
   //
  sprintf(temp,  "<polygon  points=\"200,20,80,396,380,156,20,156,320,396\" stroke=\"orchid\" stroke-width=\"10\" fill=\"aqua\" />\n"); out +=temp;
- Serial.println(out);
+ // Debug Serial.println(out);
   out += "</g>\n</svg>\n";                   // close the SVG wrapper
   server.send ( 200, "image/svg+xml", out);  // and send it to http://www.w3.org/2000/svg\
   
